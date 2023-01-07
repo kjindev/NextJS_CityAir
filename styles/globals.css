@@ -13,3 +13,42 @@
 html {
   font-family: "Pretendard-Regular";
 }
+
+.style {
+  stroke-linejoin: round;
+  stroke: #ffffff;
+  stroke-width: 2;
+  fill: #e2e8f0;
+}
+.style:hover {
+  stroke-linejoin: round;
+  stroke: #ffffff;
+  stroke-width: 2;
+  cursor: pointer;
+}
+.styleClick {
+  stroke-linejoin: round;
+  stroke: #ffffff;
+  stroke-width: 2;
+  fill: #93c5fd;
+  cursor: pointer;
+}
+.styleColor-0 {
+  fill: #86efac;
+}
+.styleColor-1 {
+  fill: #fde047;
+}
+.styleColor-2 {
+  fill: #fe9f51;
+}
+.styleColor-3 {
+  fill: #f36767;
+}
+.TEXT {
+  font-family: "Pretendard-Regular";
+  fill: #000;
+  font-size: 14px;
+  text-anchor: middle;
+  alignment-baseline: middle;
+}
