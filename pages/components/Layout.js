@@ -5,9 +5,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Seo />
-      <div className="z-10">
-        <NavBar />
-      </div>
+      <NavBar />
       <div>{children}</div>
     </>
   );
