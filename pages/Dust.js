@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import Seo from "./components/Seo";
 import {
   BsEmojiSmile,
   BsEmojiNeutral,
@@ -13,7 +12,7 @@ export default function Dust() {
   const [loading, setLoading] = useState(true);
   const dataRef = useRef();
   const [data, setData] = useState();
-  const [weatherData, setWeatherData] = useState();
+
   useEffect(() => {
     async function getData() {
       const response = await fetch(
@@ -26,6 +25,36 @@ export default function Dust() {
   }, []);
 
   useEffect(() => {
+    if (loading === false) {
+      for (let i = 0; i < 25; i++) {
+        dataRef.current.children[0].children[i + 1].classList.remove(
+          "styleColor-0",
+          "styleColor-1",
+          "styleColor-2",
+          "styleColor-3"
+        );
+        if (data[i].PM10 > 0 && data[i].PM10 <= 30) {
+          dataRef.current.children[0].children[i + 1].classList.add(
+            "styleColor-0"
+          );
+        } else if (data[i].PM10 > 30 && data[i].PM10 <= 80) {
+          dataRef.current.children[0].children[i + 1].classList.add(
+            "styleColor-1"
+          );
+        } else if (data[i].PM10 > 80 && data[i].PM10 <= 150) {
+          dataRef.current.children[0].children[i + 1].classList.add(
+            "styleColor-2"
+          );
+        } else if (data[i].PM10 > 150) {
+          dataRef.current.children[0].children[i + 1].classList.add(
+            "styleColor-3"
+          );
+        }
+      }
+    }
+  }, [loading]);
+
+  useEffect(() => {
     if (data !== undefined) {
       setLoading(false);
     }
@@ -33,11 +62,7 @@ export default function Dust() {
 
   const handleMapClick = (event) => {
     for (let i = 0; i < 25; i++) {
-      dataRef.current.children[0].children[i + 1].classList.remove(
-        "styleClick"
-      );
       if (event.target.dataset.name === data[i].MSRSTE_NM) {
-        event.target.classList.add("styleClick");
         setDataIndex(i);
       }
     }
@@ -125,22 +150,12 @@ export default function Dust() {
           );
         }
       }
-    } else if (event.target.innerText === "필터 초기화" && loading === false) {
-      for (let i = 0; i < 25; i++) {
-        dataRef.current.children[0].children[i + 1].classList.remove(
-          "styleColor-0",
-          "styleColor-1",
-          "styleColor-2",
-          "styleColor-3"
-        );
-      }
     }
   };
 
   return (
     <div className="pl-[5%] w-[95%] bg-gray-50">
-      <Seo title="미세먼지" />
-      <div className="text-5xl">서울시 실시간 대기환경 정보</div>
+      <div className="text-5xl"></div>
       <div className="flex justify-center">
         <div
           onClick={handleMapClick}
@@ -169,7 +184,7 @@ export default function Dust() {
             <path
               id="CD11140"
               data-name="중구"
-              className="style styleClick"
+              className="style"
               d="M 477 316 l 0 9 5 5 -1 3 -4 5 -4 5 -5 4 -4 7 -3 4 -4 3 -4 10 -2 -1 -3 -7 -2 -5 -2 1 -1 0 -2 -1 -3 1 0 0 -3 1 -4 2 -5 -5 -6 -3 -10 -3 -4 -1 -3 -1 -2 2 -4 -1 -3 -1 -9 0 -2 2 -4 3 0 -7 1 -4 -2 -2 0 -1 6 -3 6 -4 -1 -2 -2 -5 2 -3 4 -3 9 -1 10 1 9 2 9 -1 8 -1 9 -1 8 0 11 -1 z "
             />
             <path
@@ -475,12 +490,6 @@ export default function Dust() {
                   onClick={handleBtnClick}
                 >
                   오존 농도
-                </div>
-                <div
-                  className="hover:cursor-pointer p-5 bg-white rounded-2xl"
-                  onClick={handleBtnClick}
-                >
-                  필터 초기화
                 </div>
               </div>
             </div>
