@@ -5,7 +5,6 @@ export default function Weather() {
   const dataRef = useRef();
   const [cultureData, setCultureData] = useState();
   const [loading, setLoading] = useState(true);
-  let cultureList = [];
 
   useEffect(() => {
     async function getData() {
@@ -31,14 +30,13 @@ export default function Weather() {
     }
     for (let j = 0; j < 80; j++) {
       if (cultureData[j].GUNAME === event.target.dataset.name) {
-        //cultureList.push(cultureData[j].TITLE);
         console.log(cultureData[j].TITLE);
       }
     }
   };
 
   return (
-    <div className="pl-[5%] w-[95%] bg-gray-50">
+    <div className="pl-[5%]">
       <Seo title="문화" />
       <div className="text-5xl">서울시 문화행사 정보</div>
       <div className="flex justify-center">
@@ -294,15 +292,6 @@ export default function Weather() {
             </text>
           </svg>
         </div>
-        {loading === true ? (
-          <div>Loading...</div>
-        ) : (
-          <div>
-            {cultureList.map((item, index) => (
-              <div key={index}>{item}</div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
